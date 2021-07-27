@@ -1,34 +1,53 @@
-package com.ocbc.auctionservice.entities;
+package com.ocbc.auctionservice.services;
 
+import com.ocbc.auctionservice.entities.User;
+import com.ocbc.auctionservice.exceptions.UserAlreadyExistException;
+import com.ocbc.auctionservice.exceptions.UserNotFoundException;
+import com.ocbc.auctionservice.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private List<User> users;
+    @Autowired
+    private UserRepository userRepository;
 
-    public void initialiseUser(){
-        users = new ArrayList<>();
-        users.add(new User(1,"Alex","central", 19));
-        users.add(new User(2,"Sally","bishan", 26));
-        users.add(new User(3,"Tim","ang mo kio", 52));
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
-    public List<User> getUsers(){
-        return users;
+    @Transactional(readOnly=true)
+    public User getUser(int id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException(String.format("User id {} does not exist", id)));
     }
 
-    public User getUser(int id){
-        return users.stream().filter(user -> user.getId() == id)
-                .findFirst().orElseGet(null);
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public User createUser(User user) {
+        if (userRepository.findById(user.getId()).isPresent()){
+            throw new UserAlreadyExistException(String.format("User id {} already exist", user.getId()));
+        }
+        return userRepository.save(user);
     }
 
-    public User createUser(User user){
-        users.add(user);
-        return user;
+    @Transactional(propagation = Propagation.REQUIRED)
+    public User updateUser(User user){
+        User existingUser = getUser(user.getId());
+        existingUser.setAge(user.getAge());
+        existingUser.setAddress(user.getAddress());
+        return userRepository.save(existingUser);
+    }
+
+    public void deleteUser(int id){
+        User existingUser = getUser(id);
+        userRepository.delete(existingUser);
     }
 
 }
