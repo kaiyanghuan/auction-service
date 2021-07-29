@@ -34,7 +34,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@Valid @RequestBody UserRequest userRequest, @PathVariable int id){
-        return ResponseEntity.ok(userService.updateUser(userRequestToUser(userRequest)));
+        return ResponseEntity.ok(userService.updateUser(userRequestToUser(userRequest) ,id));
     }
 
     @DeleteMapping("/{id}")

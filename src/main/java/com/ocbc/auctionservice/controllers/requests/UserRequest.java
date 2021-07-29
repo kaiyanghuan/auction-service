@@ -2,21 +2,20 @@ package com.ocbc.auctionservice.controllers.requests;
 
 import lombok.Data;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class UserRequest {
 
-    @NotEmpty
+    @NotEmpty(message = "{userRequest.name.notEmpty}")
     private String name;
 
-    @NotNull
+    @NotNull(message = "{userRequest.address.notNull}")
     private String address;
 
-    @Pattern(regexp = "[0-9a-zA-Z@.]", message = "Please follow proper email address")
-    private String email;
-
-    @Min(value = 18, message = "Hey, must be more than 18")
-    @Max(25)
-    private int age;
+    @Min(value = 18, message = "{userRequest.age.min}")
+    @NotNull(message = "{userRequest.age.notNull}")
+    private Integer age;
 }

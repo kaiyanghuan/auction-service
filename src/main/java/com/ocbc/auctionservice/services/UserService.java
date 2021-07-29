@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -23,31 +22,30 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public User getUser(int id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException(String.format("User id {} does not exist", id)));
+                () -> new UserNotFoundException(String.format("User id %s does not exist", id)));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User createUser(User user) {
-        if (userRepository.findById(user.getId()).isPresent()){
-            throw new UserAlreadyExistException(String.format("User id {} already exist", user.getId()));
+        if (userRepository.findById(user.getId()).isPresent()) {
+            throw new UserAlreadyExistException(String.format("User id %s already exist", user.getId()));
         }
         return userRepository.save(user);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public User updateUser(User user){
-        User existingUser = getUser(user.getId());
+    public User updateUser(User user, int id) {
+        User existingUser = getUser(id);
         existingUser.setAge(user.getAge());
         existingUser.setAddress(user.getAddress());
         return userRepository.save(existingUser);
     }
 
-    public void deleteUser(int id){
+    public void deleteUser(int id) {
         User existingUser = getUser(id);
         userRepository.delete(existingUser);
     }
-
 }
