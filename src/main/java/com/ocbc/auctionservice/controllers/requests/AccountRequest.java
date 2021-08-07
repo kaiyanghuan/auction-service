@@ -4,11 +4,19 @@ import com.ocbc.auctionservice.entities.Account;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 public class AccountRequest {
-    private String accountNumber;
+
+    @NotNull(message = "{AccountRequest.accountType.notNul}")
     private Account.AccountType accountType;
+
+    @NotEmpty(message = "{AccountRequest.currency.NotEmpty}")
     private String currency;
-    private boolean userId;
+
+    @NotNull(message = "{AccountRequest.userId.notNul}")
+    private Integer userId;
 }

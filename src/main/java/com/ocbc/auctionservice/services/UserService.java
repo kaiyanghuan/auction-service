@@ -1,6 +1,5 @@
 package com.ocbc.auctionservice.services;
 
-import com.ocbc.auctionservice.entities.Account;
 import com.ocbc.auctionservice.entities.User;
 import com.ocbc.auctionservice.exceptions.UserAlreadyExistException;
 import com.ocbc.auctionservice.exceptions.UserNotFoundException;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
