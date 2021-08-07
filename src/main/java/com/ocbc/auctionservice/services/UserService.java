@@ -1,5 +1,6 @@
 package com.ocbc.auctionservice.services;
 
+import com.ocbc.auctionservice.entities.Account;
 import com.ocbc.auctionservice.entities.User;
 import com.ocbc.auctionservice.exceptions.UserAlreadyExistException;
 import com.ocbc.auctionservice.exceptions.UserNotFoundException;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -35,6 +36,15 @@ public class UserService {
         }
         return userRepository.save(user);
     }
+
+    //Just a sample
+//    public Account doSomethingWithAccount(Account account){
+//        // This one refer to jira ticket 5506 https://jira.com/ticket/5506
+//        if (account.someSortOfAccountCondition()){
+//            //TODO: Setting this like this for now, going to change when we get more updates from BA
+//            //TODO: Please remove this part of the code when BA comes back something
+//        }
+//    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public User updateUser(User user, int id) {

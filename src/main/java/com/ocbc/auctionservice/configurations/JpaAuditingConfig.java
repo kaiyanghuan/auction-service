@@ -21,7 +21,7 @@ public class JpaAuditingConfig {
         @Override
         public Optional<String> getCurrentAuditor() {
             //TODO: Change when we have JwtToken
-            return Optional.of("Kaiyang");
+            return Optional.of("System");
         }
     }
 }

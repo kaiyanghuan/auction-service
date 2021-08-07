@@ -28,6 +28,7 @@ public class Account extends Auditable {
     // Account Types are: ['C', 'D']
      */
     @Column(name = "account_type")
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     @Column(name = "currency")
@@ -43,7 +44,11 @@ public class Account extends Auditable {
     private boolean isFreeze;
 
     @Column(name = "user_id")
-    private boolean userId;
+    private int userId;
 
     public enum AccountType {C, D}
+
+    public boolean someSortOfAccountCondition(){
+        return accountType == Account.AccountType.C && lastActiveDate.equals(new Date()) && !isFreeze;
+    }
 }
