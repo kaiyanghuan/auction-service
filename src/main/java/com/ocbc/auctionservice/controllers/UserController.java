@@ -6,6 +6,7 @@ import com.ocbc.auctionservice.entities.User;
 import com.ocbc.auctionservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {
@@ -54,6 +58,9 @@ public class UserController {
                 .name(userRequest.getName())
                 .age(userRequest.getAge())
                 .address(userRequest.getAddress())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .roles(userRequest.getRoles())
+                .permissions(userRequest.getPermissions())
                 .build();
     }
 

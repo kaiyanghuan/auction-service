@@ -61,25 +61,25 @@ public class AccountController {
                 .toAccountResponse());
     }
 
-    @PutMapping("/{id}/approval")
+    @PutMapping("/approval/{id}/approve")
     public ResponseEntity<AccountResponse> approveAccount(@PathVariable String id) {
         return ResponseEntity.ok(ResponseHelper.from(accountService.approveAccount(id))
                 .toAccountResponse());
     }
 
-    @PutMapping("/{id}/unfreeze")
+    @PutMapping("/approval/{id}/unfreeze")
     public ResponseEntity<AccountResponse> unfreezeAccount(@PathVariable String id) {
         return ResponseEntity.ok(ResponseHelper.from(accountService.unfreezeAccount(id))
                 .toAccountResponse());
     }
 
-    @PutMapping("/{id}/freeze")
+    @PutMapping("/approval/{id}/freeze")
     public ResponseEntity<AccountResponse> freezeAccount(@PathVariable String id) {
         return ResponseEntity.ok(ResponseHelper.from(accountService.freezeAccount(id))
                 .toAccountResponse());
     }
 
-    @PutMapping("/{id}/close")
+    @PutMapping("/approval/{id}/close")
     public ResponseEntity<AccountResponse> closeAccount(@PathVariable String id) {
         return ResponseEntity.ok(ResponseHelper.from(accountService.closeAccount(id))
                 .toAccountResponse());

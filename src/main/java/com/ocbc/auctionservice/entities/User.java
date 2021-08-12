@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +31,27 @@ public class User extends Auditable {
 
     @Column(name = "age")
     private int age;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "roles")
+    private String roles = "";
+
+    @Column(name = "permission")
+    private String permissions = "";
+
+    public List<String> getRoleList(){
+        if(roles.length() == 0){
+            new ArrayList<>();
+        }
+        return Arrays.asList(roles.split(","));
+    }
+
+    public List<String> getPermissionList(){
+        if(permissions.length() == 0){
+            new ArrayList<>();
+        }
+        return Arrays.asList(permissions.split(","));
+    }
 }

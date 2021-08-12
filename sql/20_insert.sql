@@ -1,10 +1,10 @@
-INSERT INTO `users` (`id`, `address`, `age`, `name`, `created_by`, `created_timestamp`, `last_modified_by`, `last_modified_timestamp`) VALUES
-	(1, 'Punggol', 25, 'Alex', 'SYSTEM', NOW(), NULL, NULL),
-	(2, 'Bishan', 25, 'Sally', 'SYSTEM', NOW(), NULL, NULL),
-	(3, 'Ang Mo Kio', 25, 'Gavin', 'SYSTEM', NOW(), NULL, NULL),
-	(4, 'Yishun', 20, 'Jonathan', 'SYSTEM', NOW(), NULL, NULL),
-	(5, 'Jurong', 50, 'Kelly', 'SYSTEM', NOW(), NULL, NULL),
-	(6, 'Khatib', 26, 'Janice', 'SYSTEM', NOW(), NULL, NULL);
+INSERT INTO `users` (`id`, `created_by`, `created_timestamp`, `last_modified_by`, `last_modified_timestamp`, `address`, `age`, `name`, `password`, `permission`, `roles`, `permissions`) VALUES
+	(1, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Punggol', 25, 'alex', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_USERS, ACCESS_ACCOUNTS', 'APPROVER', NULL),
+	(2, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Bishan', 25, 'sally', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_USERS', 'USER', NULL),
+	(3, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Ang Mo Kio', 25, 'gavin', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_USERS', 'USER', NULL),
+	(4, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Yishun', 20, 'jonathan', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_USERS', 'USER', NULL),
+	(5, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Jurong', 50, 'kelly', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_USERS, ACCESS_ACCOUNTS', 'USER', NULL),
+	(6, 'SYSTEM', '2021-08-07 18:38:12', NULL, NULL, 'Khatib', 26, 'janice', '$2a$10$3juMG1SoyF2qlBYX5T0TN.zeZ2LO3SiAqt64ZefrQm69be6mzXFe.', 'ACCESS_ACCOUNTS_APPROVAL, ACCESS_ACCOUNTS', 'ADMIN', NULL);
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES (7);
 

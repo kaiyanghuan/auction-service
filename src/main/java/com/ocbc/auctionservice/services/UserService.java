@@ -27,6 +27,12 @@ public class UserService {
                 () -> new UserNotFoundException(String.format("User id %s does not exist", id)));
     }
 
+    @Transactional(readOnly = true)
+    public User getUser(String name) {
+        return userRepository.findByName(name).orElseThrow(
+                () -> new UserNotFoundException(String.format("User name %s does not exist", name)));
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User createUser(User user) {
         if (userRepository.findById(user.getId()).isPresent()) {

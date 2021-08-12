@@ -26,12 +26,16 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 -- Dumping structure for table auction.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
   `created_by` varchar(255) NOT NULL,
   `created_timestamp` datetime NOT NULL,
   `last_modified_by` varchar(255) DEFAULT NULL,
   `last_modified_timestamp` datetime DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `permission` varchar(255) DEFAULT NULL,
+  `roles` varchar(255) DEFAULT NULL,
+  `permissions` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf16;

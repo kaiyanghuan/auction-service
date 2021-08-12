@@ -18,4 +18,8 @@ public class UserRequest {
     @Min(value = 18, message = "{userRequest.age.min}")
     @NotNull(message = "{userRequest.age.notNull}")
     private Integer age;
+
+    private String password;
+    private String roles;
+    private String permissions;
 }
