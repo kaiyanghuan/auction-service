@@ -24,13 +24,19 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUser(int id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException(String.format("User id %s does not exist", id)));
+                () -> new UserNotFoundException(String.format("User's id %s does not exist", id)));
     }
 
     @Transactional(readOnly = true)
     public User getUser(String name) {
         return userRepository.findByName(name).orElseThrow(
-                () -> new UserNotFoundException(String.format("User name %s does not exist", name)));
+                () -> new UserNotFoundException(String.format("User's name %s does not exist", name)));
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new UserNotFoundException(String.format("Username %s does not exist", username)));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

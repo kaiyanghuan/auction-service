@@ -29,10 +29,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws  Exception{
         http
+                .csrf().disable()
+                .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/**").authenticated()
-                .antMatchers("/api/v1/accounts/approval/**").hasAuthority("APPROVE_ACCOUNTS")
-                .antMatchers("/api/v1/accounts/**").hasAnyAuthority("ACCESS_ACCOUNTS", "ACCESS_USERS")
+                .antMatchers("api/v1/auth/**").permitAll()
+                .anyRequest().permitAll()
+//                .antMatchers("/api/v1/users/**").hasRole("ADMIN")
+//                .antMatchers("/api/v1/accounts/approval/**").hasAuthority("APPROVE_ACCOUNTS")
+//                .antMatchers("/api/v1/accounts/**").hasAnyAuthority("ACCESS_ACCOUNTS", "ACCESS_USERS")
                 .and()
                 .httpBasic();
     }
