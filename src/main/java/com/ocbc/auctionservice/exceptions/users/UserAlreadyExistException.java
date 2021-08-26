@@ -1,6 +1,8 @@
-package com.ocbc.auctionservice.exceptions;
+package com.ocbc.auctionservice.exceptions.users;
 
-public class UserAlreadyExistException extends BusinessException{
+import com.ocbc.auctionservice.exceptions.BusinessException;
+
+public class UserAlreadyExistException extends BusinessException {
     public UserAlreadyExistException(String errorMessage){
         super(errorMessage);
     }

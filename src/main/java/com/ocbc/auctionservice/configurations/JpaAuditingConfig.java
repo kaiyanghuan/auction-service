@@ -1,6 +1,7 @@
 package com.ocbc.auctionservice.configurations;
 
 
+import com.ocbc.auctionservice.authentications.UserContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -20,8 +21,7 @@ public class JpaAuditingConfig {
     public class LoggedInUsernameAuditorAware implements AuditorAware<String> {
         @Override
         public Optional<String> getCurrentAuditor() {
-            //TODO: Change when we have JwtToken
-            return Optional.of("System");
+            return Optional.of(UserContext.loggedInUsername());
         }
     }
 }

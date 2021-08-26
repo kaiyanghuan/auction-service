@@ -28,14 +28,15 @@ public class JwtTokenProvider {
 
     private SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
-    public String generateToken(User user){
-        UserDetails userPrincipal = new UserPrincipal(user);
+    public String generateToken(Authentication authentication){
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
         Set<String> authorities = userPrincipal.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        UserPrincipal user = (UserPrincipal) userPrincipal;
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+                .setSubject(user.getUsername())
                 .claim("roles", authorities)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)

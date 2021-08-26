@@ -11,6 +11,7 @@ import com.ocbc.auctionservice.utils.helpers.RequestHelper;
 import com.ocbc.auctionservice.utils.helpers.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,6 +62,7 @@ public class AccountController {
                 .toAccountResponse());
     }
 
+    @PreAuthorize("@AccountApprovalService.validateMakerChecker(id)")
     @PutMapping("/approval/{id}/approve")
     public ResponseEntity<AccountResponse> approveAccount(@PathVariable String id) {
         return ResponseEntity.ok(ResponseHelper.from(accountService.approveAccount(id))

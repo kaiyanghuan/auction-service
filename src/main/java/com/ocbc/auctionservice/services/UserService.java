@@ -1,9 +1,10 @@
 package com.ocbc.auctionservice.services;
 
 import com.ocbc.auctionservice.entities.User;
-import com.ocbc.auctionservice.exceptions.UserAlreadyExistException;
-import com.ocbc.auctionservice.exceptions.UserNotFoundException;
+import com.ocbc.auctionservice.exceptions.users.UserAlreadyExistException;
+import com.ocbc.auctionservice.exceptions.users.UserNotFoundException;
 import com.ocbc.auctionservice.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
     public List<User> getUsers() {
+        log.info("Retrieve all users from database");
         return userRepository.findAll();
     }
 

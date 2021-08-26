@@ -1,9 +1,11 @@
 package com.ocbc.auctionservice.controllers;
 
+import com.ocbc.auctionservice.authentications.UserContext;
 import com.ocbc.auctionservice.controllers.requests.UserRequest;
 import com.ocbc.auctionservice.controllers.responses.UserResponse;
 import com.ocbc.auctionservice.entities.User;
 import com.ocbc.auctionservice.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -25,6 +28,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {
+        log.info("Request for all users for " + UserContext.loggedInUsername());
         return ResponseEntity.ok(userService.getUsers().stream().map(
                 this::userToUserResponse).collect(Collectors.toList()));
     }

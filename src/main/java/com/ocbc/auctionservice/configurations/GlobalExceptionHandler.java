@@ -3,6 +3,7 @@ package com.ocbc.auctionservice.configurations;
 import com.ocbc.auctionservice.controllers.responses.ExceptionResponse;
 import com.ocbc.auctionservice.exceptions.BusinessException;
 import com.ocbc.auctionservice.exceptions.NotFoundException;
+import com.ocbc.auctionservice.exceptions.jwts.JwtAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,6 +33,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ExceptionResponse handleBusinessExceptions(
             BusinessException ex) {
+        return createExceptionResponse(ex, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(JwtAuthenticationException.class)
+    @ResponseBody
+    public ExceptionResponse handleBusinessExceptions(
+            JwtAuthenticationException ex) {
         return createExceptionResponse(ex, HttpStatus.BAD_REQUEST);
     }
 

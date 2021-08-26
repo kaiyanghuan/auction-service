@@ -1,4 +1,4 @@
 package com.ocbc.auctionservice.authentications;
 
-public class JwtInterface {
+public interface JwtInterface {
 }
