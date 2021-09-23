@@ -1,5 +1,6 @@
 package com.ocbc.auctionservice.services;
 
+import com.ocbc.auctionservice.controllers.requests.AccountQueryRequest;
 import com.ocbc.auctionservice.controllers.requests.CreditRequest;
 import com.ocbc.auctionservice.controllers.requests.PaymentRequest;
 import com.ocbc.auctionservice.controllers.requests.TransferRequest;
@@ -9,6 +10,9 @@ import com.ocbc.auctionservice.exceptions.accounts.*;
 import com.ocbc.auctionservice.repositories.AccountRepository;
 import com.ocbc.auctionservice.utils.helpers.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +22,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+
+import static com.ocbc.auctionservice.repositories.AccountSpecifications.hasValueBetween;
 
 @Service
 public class AccountService {
@@ -30,6 +36,23 @@ public class AccountService {
 
     @Autowired
     private ResponseHelper responseHelper;
+
+    public Page<Account> getAllAccounts(Pageable pageable) {
+        return accountRepository.findAll(pageable);
+    }
+
+    public List<Account> getAccountsWithSpecificationAndPageable(Pageable pageable){
+        Page<Account> accountPages = accountRepository.findAll((Specification) hasValueBetween(BigDecimal.valueOf(1000L), BigDecimal.valueOf(10000L)),pageable);
+        return accountRepository.findAll((Specification) hasValueBetween(BigDecimal.valueOf(1000L), BigDecimal.valueOf(10000L)));
+    }
+
+    public List<Account> getAllAccounts(AccountQueryRequest accountQueryRequest) {
+        return accountRepository.findAllAccountsByQuery(accountQueryRequest);
+    }
+
+    public Page<Account> getAllPageAccounts(AccountQueryRequest accountQueryRequest) {
+        return accountRepository.findAllPageAccountsByQuery(accountQueryRequest);
+    }
 
     public List<Account> getAccounts(Integer userId) {
         return accountRepository.findAllByUserIdAndStatusNot(userId, Account.AccountStatus.CLOSED);
@@ -96,6 +119,7 @@ public class AccountService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public TransferResponse transfers(TransferRequest transferRequest) {
+
         Account fromAccount = getAccount(transferRequest.getFromAccountId().toString());
         Account toAccount = getAccount(transferRequest.getToAccountId().toString());
         validateTransfers(fromAccount, toAccount, transferRequest.getCurrency());

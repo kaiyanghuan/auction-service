@@ -1,15 +1,16 @@
 package com.ocbc.auctionservice.controllers;
 
-import com.ocbc.auctionservice.controllers.requests.AccountRequest;
-import com.ocbc.auctionservice.controllers.requests.CreditRequest;
-import com.ocbc.auctionservice.controllers.requests.PaymentRequest;
-import com.ocbc.auctionservice.controllers.requests.TransferRequest;
+import com.ocbc.auctionservice.controllers.requests.*;
 import com.ocbc.auctionservice.controllers.responses.AccountResponse;
 import com.ocbc.auctionservice.controllers.responses.TransferResponse;
+import com.ocbc.auctionservice.entities.Account;
 import com.ocbc.auctionservice.services.AccountService;
 import com.ocbc.auctionservice.utils.helpers.RequestHelper;
 import com.ocbc.auctionservice.utils.helpers.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,24 @@ public class AccountController {
 
     @Autowired
     private RequestHelper requestHelper;
+
+    @PostMapping("/page")
+    public ResponseEntity<Page<Account>> getAllAccounts(@RequestBody AppPageRequest pageRequest) {
+        Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), pageRequest.getDirection(), pageRequest.getField());
+        return ResponseEntity.ok(accountService.getAllAccounts(pageable));
+    }
+
+    @PostMapping("/query")
+    public ResponseEntity<List<AccountResponse>> getAllAccountsByQuery(@RequestBody AccountQueryRequest accountQueryRequests) {
+        return ResponseEntity.ok(accountService.getAllAccounts(accountQueryRequests).stream().map(account ->
+                ResponseHelper.from(account).toAccountResponse()).collect(Collectors.toList()));
+    }
+
+    @PostMapping("/query/page")
+    public ResponseEntity<Page<Account>> getAllAccountsByQueryPage(@RequestBody AccountQueryRequest accountQueryRequests) {
+        return ResponseEntity.ok(accountService.getAllPageAccounts(accountQueryRequests));
+    }
+
 
     @GetMapping("/{userId}/user")
     public ResponseEntity<List<AccountResponse>> getAccounts(@PathVariable Integer userId) {
