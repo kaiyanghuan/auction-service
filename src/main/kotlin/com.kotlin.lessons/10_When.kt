@@ -5,7 +5,7 @@ class `10_When`
 fun main(){
     val day = 2
 
-    val result = when (day) {
+    val result = when(day) {
         1 -> "Monday"
         2 -> "Tuesday"
         3 -> "Wednesday"
@@ -20,7 +20,8 @@ fun main(){
 
     when (day) {
         1, 2, 3, 4, 5 -> println("Weekday")
-        else -> println("Weekend")
+        6,7 -> println("Weekend")
+        else -> println("Invalid day")
     }
 
 

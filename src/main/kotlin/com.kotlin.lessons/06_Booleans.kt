@@ -1,5 +1,7 @@
 package com.kotlin.lessons
 
+import com.ocbc.auctionservice.entities.User
+
 class `06_Booleans`
 
 fun main(){
@@ -16,4 +18,7 @@ fun main(){
     println(xBoolean.and(yBoolean))
     println(xBoolean.not())
     println(yBoolean.not())
+
+    println("Text" == "Text")
+    println(User() == User())
 }

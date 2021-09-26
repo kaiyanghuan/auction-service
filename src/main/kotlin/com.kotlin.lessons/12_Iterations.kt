@@ -10,7 +10,7 @@ fun main(){
     }
     println()
 
-    for(number in 1..8){
+    for(number in 1 until 9){
         print(number)
     }
     println()

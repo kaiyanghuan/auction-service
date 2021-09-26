@@ -10,6 +10,7 @@ fun main(){
     val float: Float = 1.0f
     val long: Long = 10000000000000
     val character: Char = 'A'
+    val boolean: Boolean = true
 
     println(text)
     println(number)
@@ -18,6 +19,14 @@ fun main(){
     println(float)
     println(long)
     println(character)
+
+    var numberString = "123"
+    println(numberString.toInt())
+    println(numberString.toBigInteger())
+    numberString = "abc"
+    println(numberString.toBigIntegerOrNull())
+
+    println(numberString is String)
 
     //Conversion
 }

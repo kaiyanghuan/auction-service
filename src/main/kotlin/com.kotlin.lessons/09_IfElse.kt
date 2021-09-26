@@ -10,7 +10,9 @@ fun main(){
         println("number $number is smaller or equals to 20")
     }
 
-    val text = if (number > 20) "bigger" else "smaller"
+    val stringArray = arrayOf("A","B","C")
+    val newText = if ("A" in stringArray) "A" else "Not found"
+    val text = if (number > 20) number else 0
     println(text)
 
 

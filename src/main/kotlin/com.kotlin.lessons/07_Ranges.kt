@@ -11,5 +11,11 @@ fun main(){
     (1..5).reversed()
     1 until 10
 
+    val intArray = intArrayOf(1,2,3,4,5,6,7,8)
+
+    for(i in intArray.indices){
+        print(intArray[i])
+    }
+
 
 }

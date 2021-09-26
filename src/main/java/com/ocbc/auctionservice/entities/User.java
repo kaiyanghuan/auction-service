@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -56,5 +57,18 @@ public class User extends Auditable {
             new ArrayList<>();
         }
         return Arrays.asList(permissions.split(","));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(username, user.username) && Objects.equals(address, user.address) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(permissions, user.permissions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, username, address, age, password, roles, permissions);
     }
 }

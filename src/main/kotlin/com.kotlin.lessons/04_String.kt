@@ -18,15 +18,22 @@ fun main(){
     println(string.toLowerCase())
     println(string.toUpperCase())
     println(string.lastIndex)
-    println(string.drop(4))
-    println(string.dropLast(4))
+    println("drop ${string.drop(4)}")
+    println("drop last ${string.dropLast(4)}")
 
     val firstHalf: String = "This is "
-    val secondHalf: String = " a string"
+    val secondHalf: String = "is"
     println(firstHalf + secondHalf)
     println(firstHalf.plus(secondHalf))
 
     val apple1 = "Apple"
     val apple2 = "Apple"
     println(apple1.compareTo(apple2))
+
+    val name = "Kaiyang";
+    val age = 12;
+    val occupation = "developer"
+
+    println("$name with age $age and occupation $occupation")
+
 }

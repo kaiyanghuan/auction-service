@@ -8,7 +8,7 @@ fun main(){
     println("x: $x")
     println("y: $y")
 
-    y = x
+    y = 4
     println("new y: $y")
     //show val
 }

@@ -24,6 +24,11 @@
 			<version>${kotlin.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-maven-allopen</artifactId>
+			<version>1.1.4-3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
@@ -154,6 +159,13 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-allopen</artifactId>
+						<version>1.1.4-3</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
