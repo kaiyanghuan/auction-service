@@ -8,7 +8,7 @@ At this point you should have the following items installed:
     $ git --version
     git version 2.23.0
     ```
-   Note: Output may differ based on your environment
+   Note: Your output may differ
 
 2. Maven
     ```shell
@@ -20,7 +20,7 @@ At this point you should have the following items installed:
     Default locale: en_SG, platform encoding: UTF-8
     OS name: "mac os x", version: "10.16", arch: "x86_64", family: "mac"
     ```
-    Note: Output may differ based on your environment
+   Note: Your output may differ
 
 3. JDK 11+
  
@@ -31,7 +31,7 @@ At this point you should have the following items installed:
     OpenJDK Runtime Environment GraalVM CE 20.2.0 (build 11.0.8+10-jvmci-20.2-b03)
     OpenJDK 64-Bit Server VM GraalVM CE 20.2.0 (build 11.0.8+10-jvmci-20.2-b03, mixed mode, sharing)
     ```
-   Note: Output may differ based on your environment
+   Note: Your output may differ
 
 ## Cloning the project
 
