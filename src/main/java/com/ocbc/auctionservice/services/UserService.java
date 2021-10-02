@@ -44,9 +44,6 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User createUser(User user) {
-        if (userRepository.findById(user.getId()).isPresent()) {
-            throw new UserAlreadyExistException(String.format("User id %s already exist", user.getId()));
-        }
         return userRepository.save(user);
     }
 
@@ -64,6 +61,8 @@ public class UserService {
         User existingUser = getUser(id);
         existingUser.setAge(user.getAge());
         existingUser.setAddress(user.getAddress());
+        existingUser.setRoles(user.getRoles());
+        existingUser.setPermissions(user.getPermissions());
         return userRepository.save(existingUser);
     }
 

@@ -65,6 +65,7 @@ public class UserController {
                 .password(passwordEncoder.encode(userRequest.getPassword()))
                 .roles(userRequest.getRoles())
                 .permissions(userRequest.getPermissions())
+                .username(userRequest.getName().toLowerCase())
                 .build();
     }
 

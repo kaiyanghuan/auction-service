@@ -34,7 +34,7 @@ public class User extends Auditable {
     private String address;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "password")
     private String password;

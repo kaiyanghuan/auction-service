@@ -1,12 +1,12 @@
-package com.ocbc.auctionservice.controllers.requests;
+package features.commons;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginRequest {
-
+public class TestUser {
+    private boolean isAuthenticated;
+    private String token;
     private String username;
-    private String password;
 }
