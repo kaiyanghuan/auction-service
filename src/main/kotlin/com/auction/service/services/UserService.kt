@@ -8,7 +8,7 @@ class UserService {
 
     fun createUser(): User {
         return User().apply {
-            username = "Kaiyang"
+            username = "kaiyang"
             address = "punggol"
             password = "password"
             age = 20
