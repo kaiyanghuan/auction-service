@@ -7,6 +7,7 @@ import com.ocbc.auctionservice.controllers.responses.ApiReponse;
 import com.ocbc.auctionservice.controllers.responses.JwtAuthenticationResponse;
 import com.ocbc.auctionservice.entities.User;
 import com.ocbc.auctionservice.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/auth")
 public class AuthController {
@@ -36,6 +38,7 @@ public class AuthController {
         if(loginRequest.getUsername().isEmpty() || loginRequest.getPassword().isEmpty()){
             return new ResponseEntity<>(new ApiReponse(false, "Invalid username or password"), HttpStatus.BAD_REQUEST);
         }
+        log.info("");
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

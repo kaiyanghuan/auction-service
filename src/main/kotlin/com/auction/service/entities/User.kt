@@ -1,11 +1,10 @@
 package com.auction.service.entities
 
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-class User {
+class User : Auditable() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,16 +31,4 @@ class User {
 
     @Column(name = "permission")
     val permission: String = ""
-
-    @Column(name = "created_by")
-    val createdBy: String = "SYSTEM"
-
-    @Column(name = "created_timestamp")
-    val createdTimestamp: LocalDateTime = LocalDateTime.now()
-
-    @Column(name = "last_modified_by")
-    val lastModifiedBy: String = "SYSTEM"
-
-    @Column(name = "last_modified_timestamp")
-    val lastModifiedTimestamp: LocalDateTime = LocalDateTime.now()
 }

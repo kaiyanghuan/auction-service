@@ -1,6 +1,5 @@
 package com.ocbc.auctionservice.loggings;
 
-import com.ocbc.auctionservice.authentications.UserContext;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -33,7 +32,7 @@ public class LoggingDiagnosticFilter extends OncePerRequestFilter {
             MDC.putCloseable("responseCode", response.getStatus() + "");
             MDC.putCloseable("responseTimeMillis", duration + "");
             log.info(format("Completed Request %s", request.getRequestURI()));
-            log.info(format("Completed Request in %s duration", duration+""));
+            log.info(format("Completed Request in %s duration", duration + ""));
         }
     }
 
