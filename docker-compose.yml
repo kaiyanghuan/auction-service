@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_DATABASE=auction
+      - MARIADB_ROOT_PASSWORD=mariadb
+      - MARIADB_INITDB_SKIP_TZINFO=1
+    volumes:
+      - ./volumes/mariadb:/var/lib/mysql
