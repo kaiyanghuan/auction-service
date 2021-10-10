@@ -31,4 +31,14 @@ class User : Auditable() {
 
     @Column(name = "permission")
     val permission: String = ""
+
+    fun getRoleList(): List<String> {
+        if (roles.isEmpty()) return listOf()
+        return listOf(*roles.split(",").toTypedArray())
+    }
+
+    fun getPermissionList(): List<String> {
+        if (permission.isEmpty()) return listOf()
+        return listOf(*permission.split(",").toTypedArray())
+    }
 }

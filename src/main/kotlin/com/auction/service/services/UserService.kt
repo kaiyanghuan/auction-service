@@ -24,6 +24,10 @@ class UserService(
         return userRepository.findByUsername(username) ?: throw UserNotFoundException("Unable to find user $username")
     }
 
+    fun authenticatingUser(username: String, password: String): User {
+        logger.info("Authenticating user $username")
+        return userRepository.findByUsernameAndPassword(username, password) ?: throw UserNotFoundException("Unable to authenticate user $username")
+    }
 //    fun findUser(id: Number) :  User{
 //        return userRepository.findById(id).orElseGet(null) ?: throw Exception()
 //    }

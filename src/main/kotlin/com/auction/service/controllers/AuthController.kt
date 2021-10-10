@@ -21,7 +21,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<Any>{
-        if (loginRequest.username.isEmpty() || loginRequest.password.isEmpty()){
+        if(loginRequest.username.isEmpty() || loginRequest.password.isEmpty()){
             return ResponseEntity.ok("Invalid username or password")
         }
 
