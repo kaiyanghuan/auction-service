@@ -1,4 +1,6 @@
 package com.auction.service.controllers.responses
 
-class JwtAuthenticationResponse {
-}
+data class JwtAuthenticationResponse(
+        val accessToken: String,
+        val tokenType: String = "Bearer"
+)

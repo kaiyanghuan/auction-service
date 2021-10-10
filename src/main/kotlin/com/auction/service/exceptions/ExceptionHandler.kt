@@ -1,5 +1,6 @@
 package com.auction.service.exceptions
 
+import io.jsonwebtoken.JwtException
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
