@@ -1,0 +1,8 @@
+input UserRequest{
+    name: String
+    adddress: String
+    age: Int
+    password: String
+    roles: String
+    permissions: String
+}

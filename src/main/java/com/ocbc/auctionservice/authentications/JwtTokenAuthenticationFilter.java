@@ -5,10 +5,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.SneakyThrows;
-import org.apache.tomcat.util.http.parser.Authorization;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -35,7 +34,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String path = "api/v1/auth/login";
     private final String API_TOKEN_HEADER = "x-api-key";
-    private RequestMatcher requestMatcher = new AntPathRequestMatcher(path);
+    private RequestMatcher loginRequestMatcher = new AntPathRequestMatcher(path);
+    private RequestMatcher graphQLRequestMatcher = new AntPathRequestMatcher("/playground");
 
     @SneakyThrows
     @Override
@@ -65,6 +65,11 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
 
+    }
+
+    @Override
+    protected boolean shouldNotFilter(@NotNull HttpServletRequest request) throws ServletException {
+        return loginRequestMatcher.matches(request) || graphQLRequestMatcher.matches(request);
     }
 
     private Boolean checkAuthenticationAndValidity(String token){
