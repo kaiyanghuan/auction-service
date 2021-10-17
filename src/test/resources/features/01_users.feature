@@ -1,4 +1,10 @@
 Feature: Users
+#  Scenario: As a user, I would like to login to app to view all users
+#  Given When login with "janice" "pass123"
+#  When User calls GET all users
+#  Then Client will receives status code of 200
+#  And Client will receive user list size more than 0
+
   Scenario Outline: As a user "<user>", I would like to login to app,
                     view all users and search for my own name
     Given When login with "<username>" "<password>"
@@ -20,6 +26,7 @@ Feature: Users
     Given When login with "janice" "pass123"
     When User calls POST create user by map
       | name         | Mandy        |
+      | username     | mandy        |
       | address      | Jurong       |
       | age          | 25           |
       | password     | pass123      |
@@ -32,6 +39,7 @@ Feature: Users
     Given When login with "janice" "pass123"
     When User calls PUT update user by map
       | name         | Mandy          |
+      | username     | mandy          |
       | address      | Bukit Panjang  |
       | age          | 26             |
       | password     | pass123        |
