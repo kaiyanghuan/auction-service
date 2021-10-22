@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    expose:
+      - "3306"
+    ports:
+      - "6033:3306"
+    environment:
+      - MARIADB_DATABASE=auction
+      - MARIADB_ROOT_PASSWORD=mariadb
+      - MARIADB_INITDB_SKIP_TZINFO=1
+    volumes:
+      - ./volumes/mariadb:/var/lib/mysql
+
+  springboot:
+    depends_on:
+      - mariadb
+    image: shafiq98/auction-service:4
+    restart: always
+    ports:
+      - "8081:8081"
