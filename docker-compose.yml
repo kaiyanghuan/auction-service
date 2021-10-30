@@ -12,13 +12,15 @@ services:
       - MARIADB_DATABASE=auction
       - MARIADB_ROOT_PASSWORD=mariadb
       - MARIADB_INITDB_SKIP_TZINFO=1
-    volumes:
-      - ./volumes/mariadb:/var/lib/mysql
 
-  springboot:
+  app:
     depends_on:
       - mariadb
     image: shafiq98/auction-service:4
     restart: always
+    expose:
+      - "8081"
     ports:
       - "8081:8081"
+    volumes:
+      - ./src/main/resources:/var/lib/spring
