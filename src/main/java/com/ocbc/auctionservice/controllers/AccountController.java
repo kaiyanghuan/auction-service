@@ -5,16 +5,20 @@ import com.ocbc.auctionservice.controllers.responses.AccountResponse;
 import com.ocbc.auctionservice.controllers.responses.TransferResponse;
 import com.ocbc.auctionservice.entities.Account;
 import com.ocbc.auctionservice.services.AccountService;
+import com.ocbc.auctionservice.utils.helpers.OnCreate;
 import com.ocbc.auctionservice.utils.helpers.RequestHelper;
 import com.ocbc.auctionservice.utils.helpers.ResponseHelper;
+import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +35,9 @@ public class AccountController {
 
     @Autowired
     private RequestHelper requestHelper;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @PostMapping("/page")
     public ResponseEntity<Page<Account>> getAllAccounts(@RequestBody AppPageRequest pageRequest) {
@@ -64,6 +71,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountResponse> getAccount(@PathVariable String id) {
+        String jwtToken = (String) this.request.getAttribute("x-jwt-token");
         return ResponseEntity.ok(ResponseHelper.from(accountService.getAccount(id))
                 .toAccountResponse());
     }
@@ -74,6 +82,7 @@ public class AccountController {
                 .toAccountResponse());
     }
 
+    @Validated(OnCreate.class)
     @PostMapping
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
         return ResponseEntity.ok(ResponseHelper.from(

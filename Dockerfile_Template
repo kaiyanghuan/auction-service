@@ -1,0 +1,1 @@
+COPY config/db/migration /config/db/migration

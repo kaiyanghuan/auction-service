@@ -1,6 +1,7 @@
 package com.ocbc.auctionservice.controllers;
 
 import com.ocbc.auctionservice.authentications.UserContext;
+import com.ocbc.auctionservice.configurations.RequestSynchronizationManager;
 import com.ocbc.auctionservice.controllers.requests.UserRequest;
 import com.ocbc.auctionservice.controllers.responses.UserResponse;
 import com.ocbc.auctionservice.entities.User;
@@ -24,11 +25,14 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private RequestSynchronizationManager requestSynchronizationManager;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {
-        log.info("Request for all users for " + UserContext.loggedInUsername());
+        log.info("Request for all users for " + requestSynchronizationManager.loggedInUsername());
         return ResponseEntity.ok(userService.getUsers().stream().map(
                 this::userToUserResponse).collect(Collectors.toList()));
     }

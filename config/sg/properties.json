@@ -1,0 +1,30 @@
+{
+  "IMAGE_NAME": "auction-service",
+  "IMAGE_VERSION": "POM_VERSION",
+  "APPLICATION_NAME" : "auction-service",
+  "NAMESPACE" : "",
+  "USE_SIDECAR": "false",
+  "APP_CONFMAP_NAME": "auction-service",
+  "SUMMON_CONF_NAME": "auction-service-summon-config",
+  "COUNTRY": "SG",
+  "PV_ENABLED": "false",
+  "SWAGGER_EXTN_URL": "/v3/api-docs",
+  "SIT" : {
+    "APP_CONFMAP_FILE": "application-properties",
+    "SUMMON_CONF_FILE": "secrets.yml",
+    "ANNOTATE": "false",
+    "ROUTE_NAME" : "auction-service-sg"
+  },
+  "UAT" : {
+    "APP_CONFMAP_FILE": "application-properties",
+    "SUMMON_CONF_FILE": "secrets.yml",
+    "ANNOTATE": "false",
+    "ROUTE_NAME" : "auction-service-sg"
+  },
+  "PROD" : {
+    "APP_CONFMAP_FILE": "application-properties",
+    "SUMMON_CONF_FILE": "secrets.yml",
+    "ANNOTATE": "false",
+    "ROUTE_NAME" : "auction-service-sg"
+  }
+}

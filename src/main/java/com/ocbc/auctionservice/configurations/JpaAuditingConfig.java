@@ -1,7 +1,6 @@
 package com.ocbc.auctionservice.configurations;
 
-
-import com.ocbc.auctionservice.authentications.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -13,6 +12,9 @@ import java.util.Optional;
 @EnableJpaAuditing
 public class JpaAuditingConfig {
 
+    @Autowired
+    private RequestSynchronizationManager requestSynchronizationManager;
+
     @Bean
     public AuditorAware<String> auditorProvider() {
         return new LoggedInUsernameAuditorAware();
@@ -21,7 +23,7 @@ public class JpaAuditingConfig {
     public class LoggedInUsernameAuditorAware implements AuditorAware<String> {
         @Override
         public Optional<String> getCurrentAuditor() {
-            return Optional.of(UserContext.loggedInUsername());
+            return Optional.of(requestSynchronizationManager.loggedInUsername());
         }
     }
 }

@@ -16,6 +16,10 @@
 	<properties>
 		<java.version>11</java.version>
 		<kotlin.version>1.4.32</kotlin.version>
+		<copy-rename-maven-plugin.version>1.0</copy-rename-maven-plugin.version>
+		<iterator-maven-plugin.version>0.5.1</iterator-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
+		<plaintext-maven-plugin.version>1.0.0</plaintext-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +54,11 @@
             <version>1.18.6</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>6.4.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -184,12 +193,204 @@
 			<artifactId>graphiql-spring-boot-starter</artifactId>
 			<version>5.0.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.soebes.maven.plugins</groupId>
+			<artifactId>iterator-maven-plugin</artifactId>
+			<version>0.5.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+					<addResources>true</addResources>
+					<mainClass>${main-class}</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals><goal>prepare-agent</goal></goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<configuration>
+							<rules>
+								<requireJavaVersion>
+									<version>${java.version}</version>
+								</requireJavaVersion>
+								<banDuplicatePomDependencyVersions />
+<!--								<dependencyConvergence />-->
+							</rules>
+							<fail>true</fail>
+						</configuration>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>iterator-maven-plugin</artifactId>
+				<version>0.5.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<itemsWithProperties>
+								<itemWithProperty>
+									<name>sit</name>
+									<properties>
+										<env>sit</env>
+										<region>sg</region>
+									</properties>
+								</itemWithProperty>
+								<itemWithProperty>
+									<name>uat</name>
+									<properties>
+										<env>uat</env>
+										<region>sg</region>
+									</properties>
+								</itemWithProperty>
+								<itemWithProperty>
+									<name>prod</name>
+									<properties>
+										<env>prod</env>
+										<region>sg</region>
+									</properties>
+								</itemWithProperty>
+							</itemsWithProperties>
+							<pluginExecutors>
+								<pluginExecutor>
+									<configuration>
+										<delimiters>
+											<delimiter>${*}</delimiter>
+										</delimiters>
+										<filters>
+											<filter>${project.basedir}/config-params/${region}/${env}.properties</filter>
+										</filters>
+										<outputDirectory>${project.basedir}/config/${region}/${env}</outputDirectory>
+										<resources>
+											<resource>
+												<directory>src/main/resources</directory>
+												<includes>
+													<include>application-base.properties</include>
+												</includes>
+												<filtering>true</filtering>
+											</resource>
+										</resources>
+									</configuration>
+									<goal>copy-resources</goal>
+									<plugin>
+										<artifactId>maven-resources-plugin</artifactId>
+										<version>${maven-resources-plugin.version}</version>
+									</plugin>
+								</pluginExecutor>
+								<pluginExecutor>
+									<plugin>
+										<groupId>com.coderplus.maven.plugins</groupId>
+										<artifactId>copy-rename-maven-plugin</artifactId>
+										<version>${copy-rename-maven-plugin.version}</version>
+									</plugin>
+									<goal>rename</goal>
+									<configuration>
+										<sourceFiles>${project.basedir}/config/${region}/${env}/application-base.properties</sourceFiles>
+										<destination>${project.basedir}/config/${region}/${env}/application.properties</destination>
+									</configuration>
+								</pluginExecutor>
+							</pluginExecutors>
+						</configuration>
+						<goals>
+							<goal>iterator</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+				<version>${copy-rename-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>copy-file</id>
+						<phase>generate-sources</phase>
+						<goals><goal>copy</goal></goals>
+						<configuration>
+							<sourceFile>Dockerfile_Template</sourceFile>
+							<destinationFile>Dockerfile</destinationFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.github.olivierlemasle.maven</groupId>
+				<artifactId>plaintext-maven-plugin</artifactId>
+				<version>${plaintext-maven-plugin.version}</version>
+				<configuration>
+					<files>
+						<file>
+							<name>Dockerfile</name>
+							<append>true</append>
+							<lines>
+								<line>ADD  target/${project.artifactId}-${project.version}.jar /app/${project.artifactId}-${project.version}.jar</line>
+								<line>RUN ln -sf ${project.artifactId}-${project.version}.jar /${project.artifact}.jar</line>
+								<line>ENTRYPOINT ["summon", "--ignore-all","-f", "/etc/summon/secrets.yml", "java", "-jar", "/app/${project.artifactId}.jar"]</line>
+							</lines>
+						</file>
+						<file>
+							<name>config/pom.properties</name>
+							<append>false</append>
+							<lines>
+								<line>IMAGE_VERSION=${project.version}</line>
+							</lines>
+						</file>
+					</files>
+					<outputDirectory>./</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<id>generate-file</id>
+						<goals>
+							<goal>write</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<configuration>
+					<offline>true</offline>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mysema.maven</groupId>

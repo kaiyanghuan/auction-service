@@ -2,6 +2,7 @@ package com.ocbc.auctionservice.loggings;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static java.lang.String.format;
 
 @Slf4j
+@Order(1)
 public class LoggingDiagnosticFilter extends OncePerRequestFilter {
 
     @Override

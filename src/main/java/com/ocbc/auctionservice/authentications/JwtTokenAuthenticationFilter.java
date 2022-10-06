@@ -1,5 +1,6 @@
 package com.ocbc.auctionservice.authentications;
 
+import com.ocbc.auctionservice.configurations.RequestSynchronizationManager;
 import com.ocbc.auctionservice.services.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -32,6 +33,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private RequestSynchronizationManager requestSynchronizationManager;
+
     private String path = "api/v1/auth/login";
     private final String API_TOKEN_HEADER = "x-api-key";
     private RequestMatcher loginRequestMatcher = new AntPathRequestMatcher(path);
@@ -57,6 +61,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                     .build();
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            requestSynchronizationManager.setCurrentRequestHeader(UserContext.loggedInUser());
             MDC.put("username", UserContext.loggedInUsername());
             filterChain.doFilter(request, response);
         } catch(Exception e){
